@@ -6,6 +6,7 @@ public class CameraView : MonoBehaviour {
     public Transform playerbody;
     public float mouseSensitivity;
     float xAxisClamp = 0.0f;
+    public Vector3 targetPos;
 
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class CameraView : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+     //   playerbody.LookAt(targetPos);
         RotateCamera();
 	}
 
@@ -28,7 +30,7 @@ public class CameraView : MonoBehaviour {
         xAxisClamp -= rotAmountY;
 
         Vector3 targetRotCam = transform.rotation.eulerAngles;
-        Vector3 targetRotBody = playerbody.rotation.eulerAngles;
+      //  Vector3 targetRotBody = playerbody.rotation.eulerAngles;
 
         targetRotCam.x -= rotAmountY;
         targetRotCam.z = 0;
@@ -49,6 +51,6 @@ public class CameraView : MonoBehaviour {
      //   print(mouseY);
 
         transform.rotation = Quaternion.Euler(targetRotCam);
-        playerbody.rotation = Quaternion.Euler(targetRotBody);
+      //  playerbody.rotation = Quaternion.Euler(targetRotBody);
     }
 }

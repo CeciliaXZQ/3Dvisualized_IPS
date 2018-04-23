@@ -12,8 +12,8 @@ public class CameraLook : MonoBehaviour {
     //calutae the position:
     private float currentX = 0.0f;
     private float currentY = 0.0f;
-    private float sensivityX = 4.0f;
-    private float sensivityY = 1.0f;
+    private float sensivityX = 0.0f;
+    private float sensivityY = 0.0f;
 
     //avoid flip of the camera:
     private const float Y_ANGLE_MIN = -50.0f;
@@ -27,8 +27,8 @@ public class CameraLook : MonoBehaviour {
 
     private void Update(){
         
-        currentX += Input.GetAxis("Mouse X");
-        currentY += Input.GetAxis("Mouse Y");
+     //   currentX += Input.GetAxis("Mouse X");
+      //  currentY += Input.GetAxis("Mouse Y");
         currentY = Mathf.Clamp(currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
     }
 
