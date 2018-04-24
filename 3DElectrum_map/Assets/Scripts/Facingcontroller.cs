@@ -6,61 +6,59 @@ using UnityEngine.UI;
 public class Facingcontroller : MonoBehaviour {
     public string[] items;
     public string[] axis;
-    public float Xparser;
-    public float Yparser;
-    public float Zparser;
+    public float constantY = 1;
     int i;
+    float xDiffinReal, zDiffinReal, xDiffinVir, zDiffinVir, xNewPos, zNewPos;
 
-    public float velocity = 5;
-    public float turnSpeed = 10;
+    float velocity = 5;
+    float turnSpeed = 10;
     public GameObject myCube;
     public Vector3 targetPos;
     public Vector3 myPosition;
     Vector2 input; //horizontal & vertical
     float angle;
     Quaternion targerRotation;
-   // Transform cam;
-	
-	// Update is called once per frame
-	void Update () {
-    //    GetInput();
-     //   if (Mathf.Abs(input.x) < 1 && Mathf.Abs(input.y) < 1) return;
 
-     //   CalculateDir();
-        Rotate();
-        Move();
+    GameObject AnchorPoint;
+    public float anchorUnityX, anchorUnityZ, anchorAtlasX, anchorAtlasZ, pixelsPerMeter;
+    float NewInputX, NewInputZ;
+    float scale = 45.0f; //scale:1:450
 
-        LogMyPosition();
-
+    // Update is called once per frame
+    void Update () {
+ 
         if (i < items.Length)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 GetDataValue(items[i]);
-                //    print (i);
+                UpdateNewPosition(NewInputX,NewInputZ);
+                anchorAtlasX = NewInputX;
+                anchorAtlasZ = NewInputZ;
+
+                anchorUnityX = xNewPos;
+                anchorUnityZ = zNewPos;
+                print("From atlas: " + anchorAtlasX + ", " + anchorAtlasZ);
+                targetPos.Set(anchorUnityX, constantY, anchorUnityZ);
+                print("Target: "+ targetPos);
                 i++;
-                //targetPos.Set(myPosition.x + 1, myPosition.y + 1, myPosition.z + 1);
-                targetPos.Set(Xparser, Yparser, Zparser);
+
 
             }
         }
+                Rotate();
+                Move(targetPos);
 
-    }
-
-    //Input based on Horizontal(a,d,left,right) and Vertical(w,s,up,down) keys
-    void GetInput()
-    {
-        input.x = Input.GetAxisRaw("Horizontal");
-        input.y = Input.GetAxisRaw("Vertical");
+                LogMyPosition();
     }
 
     //Calculate direction relative to the camera's rotation
     void CalculateDir()
     {
-        //   angle = Mathf.Atan2(input.x, input.y);
+      //angle = Mathf.Atan2(input.x, input.y);
         angle = Mathf.Atan2(myCube.transform.position.x, myCube.transform.position.z);
         angle = Mathf.Rad2Deg * angle;
-    //    angle += cam.eulerAngles.y;
+    //  angle += cam.eulerAngles.y;
     }
 
     //Rotate towards calculated angle
@@ -70,12 +68,14 @@ public class Facingcontroller : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(transform.rotation, targerRotation, turnSpeed * Time.deltaTime);
     }
 
-    //The player only move along its foward axis
-    void Move()
+    //The player move towards the target position
+    void Move(Vector3 myTarget)
     {
-        //   transform.position += transform.forward * velocity * Time.deltaTime;
+      //transform.position += transform.forward * velocity * Time.deltaTime;
         float step = velocity * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, step);
+   //     print("I am moving!");
+     //   print(myTarget);
+        transform.position = Vector3.MoveTowards(transform.position, myTarget, step);
     }
 
     void LogMyPosition()
@@ -91,21 +91,42 @@ public class Facingcontroller : MonoBehaviour {
         string positionInfo = LocationInfo.text;
         print(itemDataString);
         items = itemDataString.Split(';');
-      
-        //  print(GetDataValue(items[2], "Pos_Z:"));
-      
+        AnchorPoint = GameObject.Find("AnchorPoint");
     }
 
     void GetDataValue(string data)
     {
-        //  string value = data.Substring(data.IndexOf(index) + index.Length);
-        // if (value.Contains("|")) value = value.Remove(value.IndexOf("|"));
         axis = items[i].Split('|');
-        float.TryParse(axis[0],out Xparser);
-        float.TryParse(axis[1], out Yparser);
-        float.TryParse(axis[2], out Zparser);
-        // Yparser = float.Parse(axis[1]);
-        //Zparser = float.Parse(axis[2]);
-
+        float.TryParse(axis[0],out NewInputX);
+        float.TryParse(axis[2], out NewInputZ);
     }
+
+    void UpdateNewPosition(float NewInputX, float NewInputZ)
+    {
+        xDiffinReal = Mathf.Abs(NewInputX - anchorAtlasX);
+        xDiffinVir = xDiffinReal / scale;
+        print(xDiffinReal + "//" + xDiffinVir);
+
+        zDiffinReal = Mathf.Abs(NewInputZ - anchorAtlasZ);
+        zDiffinVir = zDiffinReal / scale;
+        print(zDiffinReal + "//" + zDiffinVir);
+
+        if (NewInputX > anchorAtlasX)
+        {
+            xNewPos = anchorUnityX + xDiffinVir;
+        }
+        else
+        {
+            xNewPos = anchorUnityX - xDiffinVir;
+        }
+
+        if (NewInputZ > anchorAtlasZ)
+        {
+            zNewPos = anchorUnityZ + zDiffinVir;
+        }
+        else
+        {
+            zNewPos = anchorUnityZ - zDiffinVir;
+        }
+    } 
 }
