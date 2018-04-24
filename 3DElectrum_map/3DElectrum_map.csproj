@@ -246,6 +246,7 @@
     <Compile Include="Assets\Scripts\CameraLook.cs" />
     <Compile Include="Assets\Scripts\CameraView.cs" />
     <Compile Include="Assets\Scripts\Facingcontroller.cs" />
+    <Compile Include="Assets\Scripts\InputLoader.cs" />
     <Compile Include="Assets\Scripts\MoveTowards.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\wasd.cs" />

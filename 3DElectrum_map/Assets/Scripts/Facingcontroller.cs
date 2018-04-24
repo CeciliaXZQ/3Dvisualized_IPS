@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Facingcontroller : MonoBehaviour {
+    public string[] items;
+    public string[] axis;
+    public float Xparser;
+    public float Yparser;
+    public float Zparser;
+    int i;
+
     public float velocity = 5;
     public float turnSpeed = 10;
     public GameObject myCube;
@@ -25,10 +32,21 @@ public class Facingcontroller : MonoBehaviour {
 
         LogMyPosition();
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)) { targetPos.Set(myPosition.x + 1, myPosition.y + 1, myPosition.z + 1); }
-       
+        if (i < items.Length)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                GetDataValue(items[i]);
+                //    print (i);
+                i++;
+                //targetPos.Set(myPosition.x + 1, myPosition.y + 1, myPosition.z + 1);
+                targetPos.Set(Xparser, Yparser, Zparser);
+
+            }
+        }
+
     }
-    
+
     //Input based on Horizontal(a,d,left,right) and Vertical(w,s,up,down) keys
     void GetInput()
     {
@@ -65,4 +83,29 @@ public class Facingcontroller : MonoBehaviour {
         myPosition = myCube.transform.position;
     }
 
+    IEnumerator Start()
+    {
+        WWW LocationInfo = new WWW("http://localhost/ConnectUnity/LocationInfo");
+        yield return LocationInfo;
+        string itemDataString = LocationInfo.text;
+        string positionInfo = LocationInfo.text;
+        print(itemDataString);
+        items = itemDataString.Split(';');
+      
+        //  print(GetDataValue(items[2], "Pos_Z:"));
+      
+    }
+
+    void GetDataValue(string data)
+    {
+        //  string value = data.Substring(data.IndexOf(index) + index.Length);
+        // if (value.Contains("|")) value = value.Remove(value.IndexOf("|"));
+        axis = items[i].Split('|');
+        float.TryParse(axis[0],out Xparser);
+        float.TryParse(axis[1], out Yparser);
+        float.TryParse(axis[2], out Zparser);
+        // Yparser = float.Parse(axis[1]);
+        //Zparser = float.Parse(axis[2]);
+
+    }
 }
