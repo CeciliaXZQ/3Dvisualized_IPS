@@ -22,7 +22,7 @@ public class Facingcontroller : MonoBehaviour {
     GameObject AnchorPoint;
     public float anchorUnityX, anchorUnityZ, anchorAtlasX, anchorAtlasZ, pixelsPerMeter;
     float NewInputX, NewInputZ;
-    float scale = 45.0f; //scale:1:450
+    float scale = 2f; //scale:1:450
 
     // Update is called once per frame
     void Update () {
@@ -103,30 +103,31 @@ public class Facingcontroller : MonoBehaviour {
 
     void UpdateNewPosition(float NewInputX, float NewInputZ)
     {
-        xDiffinReal = Mathf.Abs(NewInputX - anchorAtlasX);
-        xDiffinVir = xDiffinReal / scale;
-        print(xDiffinReal + "//" + xDiffinVir);
+        xDiffinReal = NewInputX - anchorAtlasX;
+        xDiffinVir = xDiffinReal * Mathf.Deg2Rad * (6371000/scale) * Mathf.Cos(Mathf.Deg2Rad * (NewInputX + anchorAtlasX) / 2) ;
+        print("X: " + xDiffinReal + "//" + xDiffinVir);
 
-        zDiffinReal = Mathf.Abs(NewInputZ - anchorAtlasZ);
-        zDiffinVir = zDiffinReal / scale;
-        print(zDiffinReal + "//" + zDiffinVir);
+        zDiffinReal = NewInputZ - anchorAtlasZ;
+        zDiffinVir = zDiffinReal* Mathf.Deg2Rad* (6371000 / scale);
+        print("Z: " + zDiffinReal + "//" + zDiffinVir);
+
 
         if (NewInputX > anchorAtlasX)
         {
-            xNewPos = anchorUnityX + xDiffinVir;
+            xNewPos = anchorUnityX + Mathf.Abs(xDiffinVir);
         }
         else
         {
-            xNewPos = anchorUnityX - xDiffinVir;
+            xNewPos = anchorUnityX - Mathf.Abs(xDiffinVir);
         }
 
         if (NewInputZ > anchorAtlasZ)
         {
-            zNewPos = anchorUnityZ + zDiffinVir;
+            zNewPos = anchorUnityZ + Mathf.Abs(zDiffinVir);
         }
         else
         {
-            zNewPos = anchorUnityZ - zDiffinVir;
+            zNewPos = anchorUnityZ - Mathf.Abs(zDiffinVir);
         }
     } 
 }

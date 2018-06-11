@@ -897,12 +897,12 @@ MonoBehaviour:
   - 
   constantY: 1
   myCube: {fileID: 282018573}
-  targetPos: {x: 18, y: 1, z: -8}
+  targetPos: {x: -13, y: 1.27, z: -15.2}
   myPosition: {x: 0, y: 0, z: 0}
-  anchorUnityX: 18
-  anchorUnityZ: -8
-  anchorAtlasX: 810
-  anchorAtlasZ: -360
+  anchorUnityX: -13
+  anchorUnityZ: -15.2
+  anchorAtlasX: 17.949442
+  anchorAtlasZ: 59.40497
   pixelsPerMeter: 0
 --- !u!4 &282018575 stripped
 Transform:
@@ -4968,7 +4968,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400002, guid: 6236ad35ca8aabe4c9a5acd9b948d2c8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.619052
+      value: -13
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6236ad35ca8aabe4c9a5acd9b948d2c8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4976,7 +4976,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6236ad35ca8aabe4c9a5acd9b948d2c8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.19899
+      value: -15.2
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 6236ad35ca8aabe4c9a5acd9b948d2c8, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6046,8 +6046,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1665670600}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.9754229, y: -4.0320396, z: -27.985731}
+  m_LocalRotation: {x: -0, y: 0.95095503, z: -0, w: 0.30932927}
+  m_LocalPosition: {x: -9.682958, y: -4.0320396, z: 12.226779}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 347090470}
@@ -6135,7 +6135,7 @@ Transform:
   - {fileID: 1497071046}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 143.962, z: 0}
 --- !u!1 &1699293103
 GameObject:
   m_ObjectHideFlags: 0
